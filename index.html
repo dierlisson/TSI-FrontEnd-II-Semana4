@@ -9,28 +9,70 @@
 </head>
 
 <body>
-    <div>
-        <h1 id="titulo">Arrow Function no HTML</h1>
-        <p>RESPOSTAS:</p>
-        <h1 id="resultado"></h1>
-        <button id="txtPadrao" onclick="imprimirNoHTML()">texto padrão</button>
-        <input type="text" id="texto">
-        <button onclick="mudarNoHTML()">altera nome padrão</button>
+    <h1>Calculadora de Médias</h1>
 
-    </div>
+    <form action="javascript:void(0)" onsubmit="calcularMedia()">
+        <label for="nota1">Nota 1:</label>
+        <input type="number" id="nota1" name="nota1" required>
+
+        <label for="nota2">Nota 2:</label>
+        <input type="number" id="nota2" name="nota2" required>
+
+        <label for="nota3">Nota 3:</label>
+        <input type="number" id="nota3" name="nota3" required>
+
+        <br>
+
+        <label for="tipoMedia">Tipo de Média:</label>
+        <select id="tipoMedia" name="tipoMedia" required>
+            <option value="A">Aritmética</option>
+            <option value="P">Ponderada</option>
+            <option value="H">Harmônica</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <br>
+
+    <div id="resultado"></div>
+
     <script>
-        let imprimirNoHTML = (texto = 'Nada foi enviado') => {
-            const h1 = document.getElementById('resultado');
-            h1.innerHTML = texto;
-        }
+        const calcularMedia = () => {
+            const nota1 = parseFloat(document.getElementById("nota1").value);
+            const nota2 = parseFloat(document.getElementById("nota2").value);
+            const nota3 = parseFloat(document.getElementById("nota3").value);
+            const tipoMedia = document.getElementById("tipoMedia").value;
 
-        let mudarNoHTML = () => {
-            const h1 = document.getElementById('resultado');
-            const texto = document.getElementById('texto').value;
-            console.log(texto);
-            h1.innerHTML = texto;
-        }
+            let resultado;
 
+            switch (tipoMedia) {
+                case "A":
+                    resultado = calcularMediaAritmetica(nota1, nota2, nota3);
+                    break;
+                case "P":
+                    resultado = calcularMediaPonderada(nota1, nota2, nota3);
+                    break;
+                case "H":
+                    resultado = calcularMediaHarmonica(nota1, nota2, nota3);
+                    break;
+            }
+
+            imprimirNoHTML(resultado);
+        };
+
+        const calcularMediaAritmetica = (n1, n2, n3) => (n1 + n2 + n3) / 3;
+
+        const calcularMediaPonderada = (n1, n2, n3) => (5 * n1 + 3 * n2 + 2 * n3) / 10;
+
+        const calcularMediaHarmonica = (n1, n2, n3) => 3 / ((1 / n1) + (1 / n2) + (1 / n3));
+
+        const imprimirNoHTML = (resultado) => {
+            const resultadoElement = document.getElementById("resultado");
+            resultadoElement.innerHTML = `A média do aluno é: ${resultado.toFixed(2)}`;
+        };
     </script>
 </body>
 
